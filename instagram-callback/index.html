@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelWavi — Connecting Instagram</title>
+    <link rel="icon" type="image/png" href="../app-icon.png">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,sans-serif;background:#0a0a0f;color:#f5f5f7;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+        .bg-orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none}
+        .bg-orb-1{width:500px;height:500px;background:rgba(0,122,255,0.08);top:-150px;right:-100px}
+        .bg-orb-2{width:400px;height:400px;background:rgba(88,86,214,0.06);bottom:-100px;left:-50px}
+        .container{text-align:center;position:relative;z-index:1;padding:40px;max-width:440px}
+        .icon{width:80px;height:80px;border-radius:20px;margin-bottom:24px;box-shadow:0 16px 48px rgba(0,0,0,0.4),0 0 30px rgba(0,122,255,0.2)}
+        .spinner{width:40px;height:40px;border:3px solid rgba(255,255,255,0.1);border-top-color:#007AFF;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 24px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        h1{font-size:24px;font-weight:700;margin-bottom:8px;letter-spacing:-0.5px}
+        p{color:rgba(255,255,255,0.5);font-size:15px;line-height:1.6;margin-bottom:24px}
+        .status{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;background:rgba(0,122,255,0.1);border:1px solid rgba(0,122,255,0.2);border-radius:100px;font-size:13px;color:#007AFF;font-weight:600}
+        .manual-link{display:none;margin-top:16px}
+        .manual-link a{color:#007AFF;text-decoration:none;font-size:14px;font-weight:600}
+        .manual-link a:hover{text-decoration:underline}
+    </style>
+    <script>
+        // Pass the full query string (containing the auth code) to the app
+        var appUrl = "travelwavi://instagram-callback" + window.location.search;
+
+        // Try to open the app immediately
+        window.location.href = appUrl;
+
+        // If still on this page after 2 seconds, show manual link
+        setTimeout(function() {
+            var el = document.getElementById('manual');
+            if (el) {
+                el.style.display = 'block';
+                document.getElementById('statusText').textContent = 'Tap below to open TravelWavi';
+            }
+        }, 2000);
+    </script>
+</head>
+<body>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="container">
+        <img src="../app-icon.png" alt="TravelWavi" class="icon">
+        <div class="spinner"></div>
+        <h1>Connecting Instagram</h1>
+        <p>Redirecting you back to TravelWavi...</p>
+        <div class="status" id="statusText">Opening app...</div>
+        <div class="manual-link" id="manual">
+            <a id="manualLink" href="#">Open TravelWavi →</a>
+        </div>
+    </div>
+    <script>
+        // Set the manual link href
+        var link = document.getElementById('manualLink');
+        if (link) link.href = appUrl;
+    </script>
+</body>
+</html>

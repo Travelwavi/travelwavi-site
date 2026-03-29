@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelWavi — Your AI-Powered Travel Companion</title>
+    <meta name="description" content="TravelWavi is the ultimate travel app. Community-powered tips, interactive maps, smart tools, live chat, and AI assistance — all in one app.">
+    <meta name="keywords" content="travel app, travel tips, packing list, expense tracker, phrasebook, travel community, digital passport">
+    <meta property="og:title" content="TravelWavi — Your AI-Powered Travel Companion">
+    <meta property="og:description" content="Discover community travel tips, pin hidden gems on the map, chat with travelers worldwide, and use smart tools for every trip.">
+    <meta property="og:image" content="https://travelwavi.com/app-icon.png">
+    <meta property="og:url" content="https://travelwavi.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="app-icon.png">
+    <link rel="apple-touch-icon" href="app-icon.png">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--blue:#007AFF;--blue-deep:#2978FF;--blue-glow:rgba(0,122,255,0.25);--dark-bg:#0a0a0f;--dark-card:#14141f;--dark-card-border:rgba(255,255,255,0.06);--text-primary:#f5f5f7;--text-secondary:rgba(255,255,255,0.6);--text-tertiary:rgba(255,255,255,0.35);--gradient-blue:linear-gradient(135deg,#007AFF,#2978FF)}
+        html{scroll-behavior:smooth}
+        body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,sans-serif;background:var(--dark-bg);color:var(--text-primary);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+        .bg-grid{position:fixed;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+        .bg-orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+        .bg-orb-1{width:600px;height:600px;background:rgba(0,122,255,0.08);top:-200px;right:-100px;animation:float 20s ease-in-out infinite}
+        .bg-orb-2{width:500px;height:500px;background:rgba(41,120,255,0.06);bottom:-150px;left:-100px;animation:float 25s ease-in-out infinite reverse}
+        .bg-orb-3{width:400px;height:400px;background:rgba(88,86,214,0.05);top:50%;left:50%;transform:translate(-50%,-50%);animation:float 30s ease-in-out infinite}
+        @keyframes float{0%,100%{transform:translate(0,0)}25%{transform:translate(30px,-40px)}50%{transform:translate(-20px,20px)}75%{transform:translate(15px,35px)}}
+
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:rgba(10,10,15,0.7);border-bottom:1px solid rgba(255,255,255,0.05);transition:all .3s ease}
+        nav.scrolled{background:rgba(10,10,15,0.92)}
+        .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+        .nav-logo img{width:36px;height:36px;border-radius:8px}
+        .nav-logo span{font-size:20px;font-weight:700;color:var(--text-primary);letter-spacing:-0.3px}
+        .nav-links{display:flex;gap:32px;align-items:center;list-style:none}
+        .nav-links a{color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s}
+        .nav-links a:hover{color:var(--text-primary)}
+        .nav-cta{background:var(--gradient-blue);color:white!important;padding:8px 20px;border-radius:20px;font-weight:600!important;transition:transform .2s,box-shadow .2s!important}
+        .nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px var(--blue-glow)}
+        .nav-toggle{display:none;cursor:pointer}
+        .nav-toggle span{display:block;width:24px;height:2px;background:var(--text-primary);margin:5px 0;transition:.3s}
+
+        .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;background:linear-gradient(180deg,#0a0a1a 0%,#0d1528 40%,#0a0a0f 100%);overflow:hidden}
+        .hero-content{position:relative;z-index:2;max-width:800px}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(0,122,255,0.1);border:1px solid rgba(0,122,255,0.2);border-radius:100px;font-size:13px;color:var(--blue);font-weight:600;margin-bottom:24px;animation:fadeInUp .6s ease}
+        .hero-badge .pulse{width:8px;height:8px;background:#34C759;border-radius:50%;animation:pulse 2s infinite}
+        @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+        .hero-icon{width:100px;height:100px;border-radius:24px;margin:0 auto 32px;animation:fadeInUp .6s ease .1s backwards;box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 40px var(--blue-glow)}
+        .hero h1{font-size:clamp(40px,7vw,72px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:20px;animation:fadeInUp .6s ease .2s backwards}
+        .hero h1 .gradient-text{background:var(--gradient-blue);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero p{font-size:clamp(16px,2.5vw,20px);color:var(--text-secondary);max-width:600px;margin:0 auto 40px;line-height:1.7;animation:fadeInUp .6s ease .3s backwards}
+        .hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeInUp .6s ease .4s backwards}
+        .btn-primary{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:var(--gradient-blue);color:white;border:none;border-radius:14px;font-size:16px;font-weight:600;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 30px var(--blue-glow)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,122,255,0.35)}
+        .btn-secondary{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:rgba(255,255,255,0.05);color:var(--text-primary);border:1px solid rgba(255,255,255,0.1);border-radius:14px;font-size:16px;font-weight:600;text-decoration:none;cursor:pointer;transition:all .2s}
+        .btn-secondary:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2)}
+        .hero-stats{display:flex;gap:48px;justify-content:center;margin-top:64px;animation:fadeInUp .6s ease .5s backwards}
+        .hero-stat{text-align:center}
+        .hero-stat .number{font-size:28px;font-weight:800;color:var(--text-primary)}
+        .hero-stat .label{font-size:13px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+        section{position:relative;z-index:1;padding:120px 24px}
+        .section-container{max-width:1200px;margin:0 auto}
+        .section-header{text-align:center;margin-bottom:64px}
+        .section-label{display:inline-block;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--blue);margin-bottom:16px}
+        .section-header h2{font-size:clamp(32px,5vw,48px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
+        .section-header p{font-size:18px;color:var(--text-secondary);max-width:600px;margin:0 auto}
+        .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+
+        .tab-bar{display:flex;justify-content:center;gap:8px;margin-bottom:48px;flex-wrap:wrap}
+        .tab-btn{padding:10px 22px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:var(--text-secondary);border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:8px}
+        .tab-btn:hover{background:rgba(255,255,255,0.06);color:var(--text-primary)}
+        .tab-btn.active{background:var(--gradient-blue);color:white;border-color:transparent;box-shadow:0 4px 20px var(--blue-glow)}
+        .tab-content{display:none}.tab-content.active{display:block;animation:fadeIn .4s ease}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .feature-showcase{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+        .feature-info h3{font-size:32px;font-weight:700;margin-bottom:16px;letter-spacing:-0.5px}
+        .feature-info p{color:var(--text-secondary);font-size:16px;line-height:1.7;margin-bottom:24px}
+        .feature-bullets{list-style:none;display:flex;flex-direction:column;gap:12px}
+        .feature-bullets li{display:flex;align-items:center;gap:12px;font-size:15px;color:var(--text-secondary)}
+        .feature-bullets li .icon{width:36px;height:36px;background:rgba(0,122,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+        .feature-visual{background:var(--dark-card);border:1px solid var(--dark-card-border);border-radius:24px;padding:40px;display:flex;align-items:center;justify-content:center;min-height:400px;position:relative;overflow:hidden}
+        .feature-visual::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at center,rgba(0,122,255,0.03) 0%,transparent 60%)}
+        .feature-emoji-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative;z-index:1}
+        .emoji-chip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:12px 8px;text-align:center;font-size:24px;transition:transform .2s,background .2s}
+        .emoji-chip:hover{transform:translateY(-4px);background:rgba(0,122,255,0.1)}
+        .emoji-chip small{display:block;font-size:9px;color:var(--text-tertiary);margin-top:4px}
+
+        .tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+        .tool-card{background:var(--dark-card);border:1px solid var(--dark-card-border);border-radius:18px;padding:28px;transition:all .3s ease;position:relative;overflow:hidden}
+        .tool-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gradient-blue);opacity:0;transition:opacity .3s}
+        .tool-card:hover{transform:translateY(-4px);border-color:rgba(0,122,255,0.15);box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+        .tool-card:hover::before{opacity:1}
+        .tool-card .emoji{font-size:36px;margin-bottom:16px;display:block}
+        .tool-card h4{font-size:18px;font-weight:700;margin-bottom:8px}
+        .tool-card p{font-size:14px;color:var(--text-secondary);line-height:1.6}
+        .tool-card .badge{position:absolute;top:16px;right:16px;padding:4px 10px;background:rgba(255,59,48,0.15);color:#FF3B30;font-size:11px;font-weight:700;border-radius:6px;text-transform:uppercase;letter-spacing:.5px}
+        .tool-card .badge.soon{background:rgba(255,255,255,0.06);color:var(--text-tertiary)}
+
+        .languages{padding:80px 24px;overflow:hidden}
+        .marquee-wrapper{position:relative;overflow:hidden;mask-image:linear-gradient(90deg,transparent,black 10%,black 90%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,black 10%,black 90%,transparent)}
+        .marquee{display:flex;gap:24px;animation:marquee 40s linear infinite;width:max-content}
+        .marquee-item{flex-shrink:0;padding:10px 20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;font-size:14px;color:var(--text-secondary);white-space:nowrap}
+        @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+        .passport-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+        .passport-card{background:var(--dark-card);border:1px solid var(--dark-card-border);border-radius:18px;padding:32px;text-align:center;transition:transform .3s}
+        .passport-card:hover{transform:translateY(-4px)}
+        .passport-card .card-emoji{font-size:48px;margin-bottom:16px;display:block}
+        .passport-card h4{font-size:20px;font-weight:700;margin-bottom:8px}
+        .passport-card p{font-size:14px;color:var(--text-secondary);line-height:1.6}
+
+        .cta-box{background:linear-gradient(135deg,rgba(0,122,255,0.08),rgba(41,120,255,0.04));border:1px solid rgba(0,122,255,0.15);border-radius:32px;padding:80px 40px;max-width:800px;margin:0 auto;text-align:center;position:relative;overflow:hidden}
+        .cta-box::before{content:'';position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(0,122,255,0.1),transparent);border-radius:50%}
+        .cta-box h2{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-1px;margin-bottom:16px;position:relative}
+        .cta-box p{color:var(--text-secondary);font-size:18px;margin-bottom:32px;position:relative}
+
+        footer{position:relative;z-index:1;padding:48px 24px;border-top:1px solid rgba(255,255,255,0.05);text-align:center}
+        .footer-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+        .footer-logo{display:flex;align-items:center;gap:10px}
+        .footer-logo img{width:28px;height:28px;border-radius:6px}
+        .footer-logo span{font-weight:600;font-size:16px}
+        .footer-links{display:flex;gap:24px;list-style:none}
+        .footer-links a{color:var(--text-tertiary);text-decoration:none;font-size:13px;transition:color .2s}
+        .footer-links a:hover{color:var(--text-secondary)}
+        .footer-copy{color:var(--text-tertiary);font-size:13px}
+
+        @media(max-width:900px){.feature-showcase{grid-template-columns:1fr}.feature-visual{min-height:300px}.passport-grid{grid-template-columns:1fr}.hero-stats{gap:32px}}
+        @media(max-width:680px){nav{padding:12px 20px}.nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:rgba(10,10,15,0.95);backdrop-filter:blur(20px);padding:20px;gap:16px;border-bottom:1px solid rgba(255,255,255,0.05)}.nav-links.open{display:flex}.nav-toggle{display:block}.hero-stats{flex-direction:column;gap:20px}.tab-bar{gap:6px}.tab-btn{padding:8px 14px;font-size:13px}.tools-grid{grid-template-columns:1fr}.footer-content{flex-direction:column;text-align:center}}
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+
+    <nav id="navbar">
+        <a href="#" class="nav-logo"><img src="app-icon.png" alt="TravelWavi"><span>TravelWavi</span></a>
+        <div class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#tools">Tools</a></li>
+            <li><a href="#passport">Passport</a></li>
+            <li><a href="#download" class="nav-cta">Download</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge"><span class="pulse"></span>Now Available on iOS</div>
+            <img src="app-icon.png" alt="TravelWavi" class="hero-icon">
+            <h1>Travel Smarter,<br><span class="gradient-text">Together.</span></h1>
+            <p>The community-powered travel app with real tips from real travelers, interactive maps, smart tools, live chat, and AI assistance — everything you need, in one app.</p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.97 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
+                    Download for iOS
+                </a>
+                <a href="#features" class="btn-secondary">Explore Features ↓</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="number">100+</div><div class="label">Countries Covered</div></div>
+                <div class="hero-stat"><div class="number">15+</div><div class="label">Languages</div></div>
+                <div class="hero-stat"><div class="number">11</div><div class="label">Built-in Tools</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-container reveal">
+            <div class="section-header">
+                <span class="section-label">Core Features</span>
+                <h2>Everything You Need,<br>Wherever You Go</h2>
+                <p>Five powerful tabs designed for every stage of your journey.</p>
+            </div>
+            <div class="tab-bar">
+                <button class="tab-btn active" data-tab="map">🗺️ Map</button>
+                <button class="tab-btn" data-tab="tips">💡 Tips</button>
+                <button class="tab-btn" data-tab="chat">💬 Chat</button>
+                <button class="tab-btn" data-tab="tools-tab">🛠️ Tools</button>
+                <button class="tab-btn" data-tab="assistant">✨ Assistant</button>
+            </div>
+
+            <div class="tab-content active" id="tab-map">
+                <div class="feature-showcase">
+                    <div class="feature-info">
+                        <h3>📍 Interactive Travel Map</h3>
+                        <p>Discover community-sourced places pinned by real travelers. Every pin is photo-verified and drops at the exact GPS location of the photo.</p>
+                        <ul class="feature-bullets">
+                            <li><span class="icon">🍲</span> 28 categories — food, nightlife, nature, hidden gems & more</li>
+                            <li><span class="icon">⭐</span> Rate, comment, and bookmark places</li>
+                            <li><span class="icon">📶</span> Download maps offline for any country</li>
+                            <li><span class="icon">🔍</span> Smart search with recent queries</li>
+                        </ul>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="feature-emoji-grid">
+                            <div class="emoji-chip">🍲<small>Local Food</small></div>
+                            <div class="emoji-chip">☕<small>Cafés</small></div>
+                            <div class="emoji-chip">🏖️<small>Beaches</small></div>
+                            <div class="emoji-chip">💎<small>Hidden Gems</small></div>
+                            <div class="emoji-chip">🥾<small>Hiking</small></div>
+                            <div class="emoji-chip">📸<small>Photo Spots</small></div>
+                            <div class="emoji-chip">🍻<small>Nightlife</small></div>
+                            <div class="emoji-chip">🛍️<small>Shopping</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-tips">
+                <div class="feature-showcase">
+                    <div class="feature-info">
+                        <h3>💡 Community Travel Tips</h3>
+                        <p>Read, share, and translate travel tips from real travelers worldwide. Filter by region, country, or category to find exactly what you need.</p>
+                        <ul class="feature-bullets">
+                            <li><span class="icon">🌍</span> Tips from travelers in 100+ countries</li>
+                            <li><span class="icon">🌐</span> Auto-translate to your language instantly</li>
+                            <li><span class="icon">🤖</span> AI Summarizer — get key takeaways fast</li>
+                            <li><span class="icon">🔖</span> Bookmark & save tips for offline reading</li>
+                        </ul>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="feature-emoji-grid">
+                            <div class="emoji-chip">🍜<small>Food</small></div>
+                            <div class="emoji-chip">📶<small>SIM/WiFi</small></div>
+                            <div class="emoji-chip">💳<small>Money</small></div>
+                            <div class="emoji-chip">🛡️<small>Safety</small></div>
+                            <div class="emoji-chip">🚌<small>Transport</small></div>
+                            <div class="emoji-chip">🛂<small>Visas</small></div>
+                            <div class="emoji-chip">💊<small>Health</small></div>
+                            <div class="emoji-chip">🎉<small>Nightlife</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-chat">
+                <div class="feature-showcase">
+                    <div class="feature-info">
+                        <h3>💬 Live Traveler Chat</h3>
+                        <p>Connect with travelers nearby or worldwide in real-time. Join chat rooms filtered by location, age, and interests.</p>
+                        <ul class="feature-bullets">
+                            <li><span class="icon">📍</span> Location-based rooms — find travelers near you</li>
+                            <li><span class="icon">🌐</span> Auto-translate messages in real-time</li>
+                            <li><span class="icon">🏠</span> Create your own rooms with custom filters</li>
+                            <li><span class="icon">📢</span> Official channels for updates & feedback</li>
+                        </ul>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="feature-emoji-grid">
+                            <div class="emoji-chip">🌍<small>Global</small></div>
+                            <div class="emoji-chip">📍<small>Nearby</small></div>
+                            <div class="emoji-chip">🇯🇵<small>Japan</small></div>
+                            <div class="emoji-chip">🇹🇭<small>Thailand</small></div>
+                            <div class="emoji-chip">🇮🇹<small>Italy</small></div>
+                            <div class="emoji-chip">🇧🇷<small>Brazil</small></div>
+                            <div class="emoji-chip">🇦🇺<small>Australia</small></div>
+                            <div class="emoji-chip">➕<small>Create</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-tools-tab">
+                <div class="feature-showcase">
+                    <div class="feature-info">
+                        <h3>🛠️ Smart Travel Tools</h3>
+                        <p>11 built-in tools for every stage of your trip — from packing and planning to expenses and emergencies.</p>
+                        <ul class="feature-bullets">
+                            <li><span class="icon">🎒</span> AI packing lists tailored to your destination</li>
+                            <li><span class="icon">📊</span> Expense tracker with multi-currency support</li>
+                            <li><span class="icon">💬</span> Phrasebook with 85 languages</li>
+                            <li><span class="icon">🆘</span> One-tap SOS with local emergency numbers</li>
+                        </ul>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="feature-emoji-grid">
+                            <div class="emoji-chip">📲<small>Apps</small></div>
+                            <div class="emoji-chip">🎒<small>Packing</small></div>
+                            <div class="emoji-chip">📊<small>Expenses</small></div>
+                            <div class="emoji-chip">💬<small>Phrases</small></div>
+                            <div class="emoji-chip">⏰<small>Timezone</small></div>
+                            <div class="emoji-chip">🙏<small>Etiquette</small></div>
+                            <div class="emoji-chip">🆘<small>SOS</small></div>
+                            <div class="emoji-chip">📅<small>Itinerary</small></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="tab-assistant">
+                <div class="feature-showcase">
+                    <div class="feature-info">
+                        <h3>✨ AI Travel Assistant</h3>
+                        <p>Your personal AI travel companion. Ask anything about your destination and get instant, intelligent answers powered by advanced AI.</p>
+                        <ul class="feature-bullets">
+                            <li><span class="icon">🧠</span> Powered by advanced AI models</li>
+                            <li><span class="icon">🌍</span> Destination-specific knowledge</li>
+                            <li><span class="icon">💡</span> Personalized recommendations</li>
+                            <li><span class="icon">⚡</span> Instant answers, zero wait time</li>
+                        </ul>
+                    </div>
+                    <div class="feature-visual">
+                        <div style="text-align:center;position:relative;z-index:1">
+                            <div style="font-size:72px;margin-bottom:16px">✨</div>
+                            <div style="font-size:20px;font-weight:700;margin-bottom:8px">Coming Soon</div>
+                            <div style="color:var(--text-tertiary);font-size:14px">Your AI companion is almost ready.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="tools" id="tools" style="background:linear-gradient(180deg,var(--dark-bg),#0d1020)">
+        <div class="section-container reveal">
+            <div class="section-header">
+                <span class="section-label">Travel Toolbox</span>
+                <h2>A Tool For Every Moment</h2>
+                <p>From pre-trip planning to on-the-ground essentials.</p>
+            </div>
+            <div class="tools-grid">
+                <div class="tool-card"><span class="badge">Hot</span><span class="emoji">📲</span><h4>Destination Apps</h4><p>Discover the best local apps for ride-hailing, food delivery, transit, and more — curated for 100+ countries.</p></div>
+                <div class="tool-card"><span class="emoji">🎒</span><h4>Smart Packing</h4><p>AI-generated packing lists tailored to your destination, weather, trip purpose, and travel style.</p></div>
+                <div class="tool-card"><span class="emoji">📊</span><h4>Expense Tracker</h4><p>Track spending by category with multi-currency support. Get budget tips and convert totals via ECB rates.</p></div>
+                <div class="tool-card"><span class="emoji">💬</span><h4>Smart Phrasebook</h4><p>Essential phrases in 85 languages with phonetic pronunciation guides. Never get lost in translation.</p></div>
+                <div class="tool-card"><span class="emoji">🙏</span><h4>Respect & Etiquette</h4><p>Cultural customs and rules for 50+ countries. Know what's polite and what to avoid before you arrive.</p></div>
+                <div class="tool-card"><span class="badge">Hot</span><span class="emoji">🆘</span><h4>SOS & Safety</h4><p>One-tap access to local emergency numbers — police, ambulance, fire — for any country in the world.</p></div>
+                <div class="tool-card"><span class="emoji">⏰</span><h4>Time Zone Buddy</h4><p>Track time differences between home and your destination. Never miss a call or meeting.</p></div>
+                <div class="tool-card"><span class="badge soon">Soon</span><span class="emoji">📅</span><h4>Itinerary Maker</h4><p>Plan your daily routes with smart suggestions for activities, food, and sightseeing.</p></div>
+                <div class="tool-card"><span class="badge soon">Soon</span><span class="emoji">🤝</span><h4>Group Split</h4><p>Split expenses with travel buddies. Invite friends, track who owes what, and settle up easily.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="languages">
+        <div class="section-container reveal">
+            <div class="section-header">
+                <span class="section-label">Localization</span>
+                <h2>Speaks Your Language</h2>
+                <p>Fully localized in 15+ languages with RTL support.</p>
+            </div>
+            <div class="marquee-wrapper">
+                <div class="marquee">
+                    <span class="marquee-item">🇬🇧 English</span><span class="marquee-item">🇸🇦 العربية</span><span class="marquee-item">🇩🇪 Deutsch</span><span class="marquee-item">🇪🇸 Español</span><span class="marquee-item">🇫🇷 Français</span><span class="marquee-item">🇮🇱 עברית</span><span class="marquee-item">🇮🇳 हिन्दी</span><span class="marquee-item">🇮🇩 Bahasa</span><span class="marquee-item">🇮🇹 Italiano</span><span class="marquee-item">🇯🇵 日本語</span><span class="marquee-item">🇰🇷 한국어</span><span class="marquee-item">🇧🇷 Português</span><span class="marquee-item">🇷🇺 Русский</span><span class="marquee-item">🇹🇭 ไทย</span><span class="marquee-item">🇹🇷 Türkçe</span><span class="marquee-item">🇻🇳 Tiếng Việt</span><span class="marquee-item">🇨🇳 中文</span><span class="marquee-item">🇺🇦 Українська</span>
+                    <span class="marquee-item">🇬🇧 English</span><span class="marquee-item">🇸🇦 العربية</span><span class="marquee-item">🇩🇪 Deutsch</span><span class="marquee-item">🇪🇸 Español</span><span class="marquee-item">🇫🇷 Français</span><span class="marquee-item">🇮🇱 עברית</span><span class="marquee-item">🇮🇳 हिन्दी</span><span class="marquee-item">🇮🇩 Bahasa</span><span class="marquee-item">🇮🇹 Italiano</span><span class="marquee-item">🇯🇵 日本語</span><span class="marquee-item">🇰🇷 한국어</span><span class="marquee-item">🇧🇷 Português</span><span class="marquee-item">🇷🇺 Русский</span><span class="marquee-item">🇹🇭 ไทย</span><span class="marquee-item">🇹🇷 Türkçe</span><span class="marquee-item">🇻🇳 Tiếng Việt</span><span class="marquee-item">🇨🇳 中文</span><span class="marquee-item">🇺🇦 Українська</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="passport" id="passport" style="background:linear-gradient(180deg,#0d1020,var(--dark-bg))">
+        <div class="section-container reveal">
+            <div class="section-header">
+                <span class="section-label">Gamification</span>
+                <h2>Your Digital Passport</h2>
+                <p>Collect stamps, unlock achievements, and climb the leaderboard.</p>
+            </div>
+            <div class="passport-grid">
+                <div class="passport-card"><span class="card-emoji">🛂</span><h4>Country Stamps</h4><p>Collect stamps for every country you visit. Watch your passport fill up with colorful travel memories.</p></div>
+                <div class="passport-card"><span class="card-emoji">🏆</span><h4>50 Achievements</h4><p>Unlock achievements across 7 categories — from posting your first tip to visiting 10 countries.</p></div>
+                <div class="passport-card"><span class="card-emoji">📊</span><h4>Leaderboard</h4><p>Compete with travelers worldwide. Earn points by sharing tips, pinning places, and helping others.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" id="download">
+        <div class="section-container reveal">
+            <div class="cta-box">
+                <h2>Start Your Next Adventure</h2>
+                <p>Join thousands of travelers who explore smarter, together.</p>
+                <a href="#" class="btn-primary" style="display:inline-flex">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.97 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
+                    Download on the App Store
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo"><img src="app-icon.png" alt="TravelWavi"><span>TravelWavi</span></div>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <span class="footer-copy">&copy; 2025 TravelWavi. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)});
+        function toggleMenu(){document.getElementById('navLinks').classList.toggle('open')}
+        document.querySelectorAll('.tab-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));btn.classList.add('active');document.getElementById('tab-'+btn.dataset.tab).classList.add('active')})});
+        const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible')})},{threshold:0.1});
+        document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+    </script>
+</body>
+</html>
