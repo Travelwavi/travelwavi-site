@@ -4,20 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TravelWavi — Your AI-Powered Travel Companion</title>
-    <meta name="description" content="TravelWavi is the ultimate travel app. Community-powered tips, interactive maps, smart tools, live chat, and AI assistance — all in one app.">
-    <meta name="keywords" content="travel app, travel tips, packing list, expense tracker, phrasebook, travel community, digital passport">
-    <meta property="og:title" content="TravelWavi — Your AI-Powered Travel Companion">
-    <meta property="og:description" content="Discover community travel tips, pin hidden gems on the map, chat with travelers worldwide, and use smart tools for every trip.">
+    <meta name="description" content="Real travel tips from real travelers in 100+ countries. Interactive maps, AI itineraries, 11 built-in tools. Free on iOS, in 20+ languages.">
+    <meta name="keywords" content="travel app, travel tips, packing list, expense tracker, phrasebook, travel community, digital passport, offline maps, solo travel, trip planner">
+    <meta property="og:title" content="TravelWavi — Real travel tips from real travelers">
+    <meta property="og:description" content="Community travel companion: maps, tips, AI itineraries, 11 built-in tools. iOS, 20+ languages.">
     <meta property="og:image" content="https://travelwavi.com/app-icon.png">
     <meta property="og:url" content="https://travelwavi.com">
+    <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TravelWavi — Real travel tips from real travelers">
+    <meta name="twitter:description" content="Community travel companion. iOS, 20+ languages.">
+    <meta name="twitter:image" content="https://travelwavi.com/app-icon.png">
+    <link rel="canonical" href="https://travelwavi.com/">
+    <!-- iOS Smart App Banner: replace REPLACE_WITH_APP_ID once App Store Connect issues your numeric App ID -->
+    <meta name="apple-itunes-app" content="app-id=REPLACE_WITH_APP_ID">
     <link rel="icon" type="image/png" href="app-icon.png">
     <link rel="apple-touch-icon" href="app-icon.png">
+
+    <!-- Schema.org structured data for travel SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MobileApplication",
+      "name": "TravelWavi",
+      "operatingSystem": "iOS",
+      "applicationCategory": "TravelApplication",
+      "description": "Community-powered travel companion — real tips from real travelers, AI itineraries, interactive maps, 11 built-in tools, 20+ languages.",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "url": "https://travelwavi.com"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "TravelWavi",
+      "url": "https://travelwavi.com",
+      "logo": "https://travelwavi.com/app-icon.png"
+    }
+    </script>
+
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
         :root{--blue:#007AFF;--blue-deep:#2978FF;--blue-glow:rgba(0,122,255,0.25);--dark-bg:#0a0a0f;--dark-card:#14141f;--dark-card-border:rgba(255,255,255,0.06);--text-primary:#f5f5f7;--text-secondary:rgba(255,255,255,0.6);--text-tertiary:rgba(255,255,255,0.35);--gradient-blue:linear-gradient(135deg,#007AFF,#2978FF)}
         html{scroll-behavior:smooth}
         body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',Roboto,sans-serif;background:var(--dark-bg);color:var(--text-primary);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+        /* Skip-to-content link for accessibility */
+        .skip-to-content{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+        .skip-to-content:focus{position:fixed;top:12px;left:12px;width:auto;height:auto;padding:8px 14px;background:var(--blue);color:#fff;z-index:10000;text-decoration:none;border-radius:6px}
+
+        /* Reduce motion (P2-7 / accessibility) */
+        @media (prefers-reduced-motion: reduce){
+            *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}
+        }
 
         .bg-grid{position:fixed;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
         .bg-orb{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
@@ -131,14 +171,16 @@
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-to-content">Skip to content</a>
+
     <div class="bg-grid"></div>
     <div class="bg-orb bg-orb-1"></div>
     <div class="bg-orb bg-orb-2"></div>
     <div class="bg-orb bg-orb-3"></div>
 
     <nav id="navbar">
-        <a href="#" class="nav-logo"><img src="app-icon.png" alt="TravelWavi"><span>TravelWavi</span></a>
-        <div class="nav-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+        <a href="/" class="nav-logo"><img src="app-icon.png" alt="TravelWavi" width="36" height="36"><span>TravelWavi</span></a>
+        <div class="nav-toggle" onclick="toggleMenu()" aria-label="Open menu"><span></span><span></span><span></span></div>
         <ul class="nav-links" id="navLinks">
             <li><a href="#features">Features</a></li>
             <li><a href="#tools">Tools</a></li>
@@ -147,22 +189,24 @@
         </ul>
     </nav>
 
+    <main id="main">
     <section class="hero">
         <div class="hero-content">
             <div class="hero-badge"><span class="pulse"></span>Now Available on iOS</div>
-            <img src="app-icon.png" alt="TravelWavi" class="hero-icon">
+            <img src="app-icon.png" alt="TravelWavi" class="hero-icon" width="100" height="100">
             <h1>Travel Smarter,<br><span class="gradient-text">Together.</span></h1>
             <p>The community-powered travel app with real tips from real travelers, interactive maps, smart tools, live chat, and AI assistance — everything you need, in one app.</p>
             <div class="hero-buttons">
-                <a href="#download" class="btn-primary">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.97 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
-                    Download for iOS
+                <!-- Replace REPLACE_WITH_APP_ID with the numeric App Store Connect ID once available -->
+                <a href="https://apps.apple.com/app/travelwavi/idREPLACE_WITH_APP_ID" class="btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.97 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
+                    Download on the App Store
                 </a>
                 <a href="#features" class="btn-secondary">Explore Features ↓</a>
             </div>
             <div class="hero-stats">
                 <div class="hero-stat"><div class="number">100+</div><div class="label">Countries Covered</div></div>
-                <div class="hero-stat"><div class="number">15+</div><div class="label">Languages</div></div>
+                <div class="hero-stat"><div class="number">20+</div><div class="label">Languages</div></div>
                 <div class="hero-stat"><div class="number">11</div><div class="label">Built-in Tools</div></div>
             </div>
         </div>
@@ -189,7 +233,7 @@
                         <h3>📍 Interactive Travel Map</h3>
                         <p>Discover community-sourced places pinned by real travelers. Every pin is photo-verified and drops at the exact GPS location of the photo.</p>
                         <ul class="feature-bullets">
-                            <li><span class="icon">🍲</span> 28 categories — food, nightlife, nature, hidden gems & more</li>
+                            <li><span class="icon">🍲</span> 28 categories — food, nightlife, nature, hidden gems &amp; more</li>
                             <li><span class="icon">⭐</span> Rate, comment, and bookmark places</li>
                             <li><span class="icon">📶</span> Download maps offline for any country</li>
                             <li><span class="icon">🔍</span> Smart search with recent queries</li>
@@ -219,7 +263,7 @@
                             <li><span class="icon">🌍</span> Tips from travelers in 100+ countries</li>
                             <li><span class="icon">🌐</span> Auto-translate to your language instantly</li>
                             <li><span class="icon">🤖</span> AI Summarizer — get key takeaways fast</li>
-                            <li><span class="icon">🔖</span> Bookmark & save tips for offline reading</li>
+                            <li><span class="icon">🔖</span> Bookmark &amp; save tips for offline reading</li>
                         </ul>
                     </div>
                     <div class="feature-visual">
@@ -246,7 +290,7 @@
                             <li><span class="icon">📍</span> Location-based rooms — find travelers near you</li>
                             <li><span class="icon">🌐</span> Auto-translate messages in real-time</li>
                             <li><span class="icon">🏠</span> Create your own rooms with custom filters</li>
-                            <li><span class="icon">📢</span> Official channels for updates & feedback</li>
+                            <li><span class="icon">📢</span> Official channels for updates &amp; feedback</li>
                         </ul>
                     </div>
                     <div class="feature-visual">
@@ -306,8 +350,8 @@
                     <div class="feature-visual">
                         <div style="text-align:center;position:relative;z-index:1">
                             <div style="font-size:72px;margin-bottom:16px">✨</div>
-                            <div style="font-size:20px;font-weight:700;margin-bottom:8px">Coming Soon</div>
-                            <div style="color:var(--text-tertiary);font-size:14px">Your AI companion is almost ready.</div>
+                            <div style="font-size:20px;font-weight:700;margin-bottom:8px">In the App</div>
+                            <div style="color:var(--text-tertiary);font-size:14px">Ask anything. 5 free queries / day, unlimited with Assistant Pro.</div>
                         </div>
                     </div>
                 </div>
@@ -323,15 +367,15 @@
                 <p>From pre-trip planning to on-the-ground essentials.</p>
             </div>
             <div class="tools-grid">
-                <div class="tool-card"><span class="badge">Hot</span><span class="emoji">📲</span><h4>Destination Apps</h4><p>Discover the best local apps for ride-hailing, food delivery, transit, and more — curated for 100+ countries.</p></div>
+                <div class="tool-card"><span class="badge">Hot</span><span class="emoji">📲</span><h4>Destination Apps</h4><p>Discover the best local apps for ride-hailing, food delivery, transit, and more — curated for 100+ countries. Some links are affiliate links; TravelWavi may earn a small commission at no extra cost to you.</p></div>
                 <div class="tool-card"><span class="emoji">🎒</span><h4>Smart Packing</h4><p>AI-generated packing lists tailored to your destination, weather, trip purpose, and travel style.</p></div>
                 <div class="tool-card"><span class="emoji">📊</span><h4>Expense Tracker</h4><p>Track spending by category with multi-currency support. Get budget tips and convert totals via ECB rates.</p></div>
                 <div class="tool-card"><span class="emoji">💬</span><h4>Smart Phrasebook</h4><p>Essential phrases in 85 languages with phonetic pronunciation guides. Never get lost in translation.</p></div>
-                <div class="tool-card"><span class="emoji">🙏</span><h4>Respect & Etiquette</h4><p>Cultural customs and rules for 50+ countries. Know what's polite and what to avoid before you arrive.</p></div>
-                <div class="tool-card"><span class="badge">Hot</span><span class="emoji">🆘</span><h4>SOS & Safety</h4><p>One-tap access to local emergency numbers — police, ambulance, fire — for any country in the world.</p></div>
+                <div class="tool-card"><span class="emoji">🙏</span><h4>Respect &amp; Etiquette</h4><p>Cultural customs and rules for 50+ countries. Know what's polite and what to avoid before you arrive.</p></div>
+                <div class="tool-card"><span class="badge">Hot</span><span class="emoji">🆘</span><h4>SOS &amp; Safety</h4><p>One-tap access to local emergency numbers — police, ambulance, fire — for any country in the world.</p></div>
                 <div class="tool-card"><span class="emoji">⏰</span><h4>Time Zone Buddy</h4><p>Track time differences between home and your destination. Never miss a call or meeting.</p></div>
-                <div class="tool-card"><span class="badge soon">Soon</span><span class="emoji">📅</span><h4>Itinerary Maker</h4><p>Plan your daily routes with smart suggestions for activities, food, and sightseeing.</p></div>
-                <div class="tool-card"><span class="badge soon">Soon</span><span class="emoji">🤝</span><h4>Group Split</h4><p>Split expenses with travel buddies. Invite friends, track who owes what, and settle up easily.</p></div>
+                <div class="tool-card"><span class="emoji">📅</span><h4>Itinerary Maker</h4><p>Plan your daily routes with smart suggestions for activities, food, and sightseeing.</p></div>
+                <div class="tool-card"><span class="emoji">🤝</span><h4>Group Split</h4><p>Split expenses with travel buddies. Invite friends, track who owes what, and settle up easily.</p></div>
             </div>
         </div>
     </section>
@@ -341,7 +385,7 @@
             <div class="section-header">
                 <span class="section-label">Localization</span>
                 <h2>Speaks Your Language</h2>
-                <p>Fully localized in 15+ languages with RTL support.</p>
+                <p>Fully localized in 20+ languages with RTL support.</p>
             </div>
             <div class="marquee-wrapper">
                 <div class="marquee">
@@ -372,23 +416,25 @@
             <div class="cta-box">
                 <h2>Start Your Next Adventure</h2>
                 <p>Join thousands of travelers who explore smarter, together.</p>
-                <a href="#" class="btn-primary" style="display:inline-flex">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.97 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
+                <a href="https://apps.apple.com/app/travelwavi/idREPLACE_WITH_APP_ID" class="btn-primary" style="display:inline-flex">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 21.99 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09 21.99C7.79 22.03 6.8 20.68 5.96 19.47C4.25 16.97 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/></svg>
                     Download on the App Store
                 </a>
             </div>
         </div>
     </section>
+    </main>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-logo"><img src="app-icon.png" alt="TravelWavi"><span>TravelWavi</span></div>
+            <div class="footer-logo"><img src="app-icon.png" alt="TravelWavi" width="28" height="28"><span>TravelWavi</span></div>
             <ul class="footer-links">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of Service</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/privacy.html">Privacy Policy</a></li>
+                <li><a href="/terms.html">Terms of Service</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/press.html">Press</a></li>
             </ul>
-            <span class="footer-copy">&copy; 2025 TravelWavi. All rights reserved.</span>
+            <span class="footer-copy">&copy; 2026 TravelWavi. All rights reserved.</span>
         </div>
     </footer>
 
